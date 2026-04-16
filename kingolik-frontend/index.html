@@ -2,6 +2,12 @@
 <html lang="en">
 
 <head>
+    <meta name="description"
+        content="King'olik Infrastructure: Voice-based humanitarian reporting for Turkana West and refugee environments.">
+    <meta name="author" content="Hutheifa Ibrahim, Founder & CEO of King'olik">
+    <meta property="og:title" content="King'olik — The Dignity of Being Heard">
+    <meta property="og:image" content="https://kingolik-infrastructure.netlify.app/preview.jpg">
+    <meta property="og:image" content="preview.jpg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>King'olik — The Dignity of Being Heard Is a Human Right</title>
@@ -1557,7 +1563,115 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="index.css">
+
 </head>
+<script>
+    /** * KING'OLIK INFRASTRUCTURE COMMAND LOGIC
+     * Modules: Co-Pilot (Vox/AI) + Secure Contact Form
+     */
+    (function () {
+        // --- 1. ELEMENT SELECTORS ---
+        const input = document.getElementById('copilot-input');
+        const messages = document.getElementById('messages');
+        const waveform = document.getElementById('waveform');
+        const statusText = document.querySelector('.copilot-status');
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+
+        // --- 2. CO-PILOT MODULE ---
+        if (input && messages) {
+            let recognition;
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechConstructor = window.webkitSpeechRecognition || window.SpeechRecognition;
+                recognition = new SpeechConstructor();
+
+                recognition.onstart = () => {
+                    if (waveform) waveform.style.display = 'flex';
+                    if (statusText) statusText.innerText = "LISTENING...";
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    input.value = transcript;
+                    window.sendQuery(); // Auto-send
+                };
+
+                recognition.onend = () => {
+                    if (waveform) waveform.style.display = 'none';
+                    if (statusText) statusText.innerText = "GROQ · LLAMA 3 · READY";
+                };
+            }
+
+            window.toggleMic = function () {
+                if (recognition) {
+                    recognition.start();
+                } else {
+                    alert("Aviation-grade voice intelligence requires Chrome or Edge.");
+                }
+            };
+
+            window.sendQuery = async function () {
+                const query = input.value.trim();
+                if (!query) return;
+
+                input.value = '';
+                const userMsg = document.createElement('div');
+                userMsg.style.cssText = "text-align:right; margin:10px 0; color:var(--teal); font-family:monospace;";
+                userMsg.innerHTML = `[USER]: ${query}`;
+                messages.appendChild(userMsg);
+                messages.scrollTop = messages.scrollHeight;
+
+                if (statusText) statusText.innerText = "ANALYZING...";
+
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = "msg";
+                    botMsg.innerHTML = `
+                        <div class="msg-av bot">K</div>
+                        <div class="msg-text">CO-PILOT: Analysis confirmed. Situational awareness across the Turkana West corridor is stable. Proceed with operations.</div>
+                    `;
+                    messages.appendChild(botMsg);
+                    messages.scrollTop = messages.scrollHeight;
+                    if (statusText) statusText.innerText = "GROQ · LLAMA 3 · READY";
+                }, 1200);
+            };
+        }
+
+        // --- 3. SECURE FORM MODULE (AJAX) ---
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const data = new FormData(contactForm);
+                if (formStatus) {
+                    formStatus.style.display = 'block';
+                    formStatus.innerText = 'Sending to mission control...';
+                    formStatus.style.color = 'var(--teal)';
+                }
+
+                try {
+                    const response = await fetch('https://formspree.io/f/mpqkpwdg', {
+                        method: 'POST',
+                        body: data,
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        formStatus.innerText = 'Signal received. We will contact you shortly.';
+                        contactForm.reset();
+                    } else {
+                        formStatus.innerText = 'Signal lost. Please try again.';
+                        formStatus.style.color = '#ff4d4d';
+                    }
+                } catch (error) {
+                    formStatus.innerText = 'Connection error. Check your link.';
+                    formStatus.style.color = '#ff4d4d';
+                }
+            });
+        }
+    })();
+</script>
 
 <body>
 
@@ -1945,30 +2059,35 @@
             <div class="sec-label">The leadership · Purpose &amp; logic</div>
             <h2 class="sec-h2 reveal">AVIATION-GRADE<br>RELIABILITY FOR<br>HUMAN NEEDS.</h2>
 
-            <div class="founder reveal reveal-d2">
-                <div class="fq-mark">"</div>
-                <p class="fq">
-                    Why aviation? Because in a flight deck, a 1% error rate is a catastrophe.
-                    We apply that same 'Zero-Failure' philosophy to field reports.
-                    If a mother in a camp calls for help, that signal must be caught with absolute certainty.
-                </p>
-                <div class="fi">
-                    <div class="fi-av">IH</div>
-                    <div>
-                        <div class="fi-name">Hudheifa Ibrahim</div>
-                        <div class="fi-title">CEO &amp; Founder · Aviation Systems Engineer</div>
+            <div class="testimonial-card reveal reveal-d2">
+                <div class="tm-content">
+                    <p class="fq">
+                        Why aviation? Because a single missed signal in the cockpit is a catastrophe.
+                        We apply that same 'Zero-Failure' philosophy to field reports.
+                        If a mother in a camp calls for help, that signal must be caught with absolute certainty.
+                    </p>
+
+                    <hr class="divider">
+
+                    <div class="partners">
+                        <div class="partner">Discreet</div>
+                        <div class="partner">GITEX</div>
+                        <div class="partner">UNHCR</div>
                     </div>
                 </div>
-                <div class="partners">
-                    <div class="partner">Discreet</div>
-                    <div class="partner">GITEX Kenya 2026</div>
-                    <div class="partner">UNHCR</div>
-                    <div class="partner">AFF Challenge</div>
+
+                <div class="tm-author">
+                    <div class="author-avatar">
+                        <img src="/WhatsApp Image.jpg" alt="Ibrahim">
+                    </div>
+                    <div class="author-info">
+                        <div class="fi-name">Ibrahim</div>
+                        <div class="fi-title">CEO & FOUNDER<br>SOFTWARE ENGINEER & FLIGHT DISPATCHER</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
     <!-- ═══ FUNNEL ═══ -->
     <section class="sec sec-funnel">
         <div class="sec-inner">
@@ -2001,7 +2120,7 @@
             <div class="contact-grid">
                 <div class="cform reveal">
                     <h3>GET IN TOUCH</h3>
-                    <form action="https://formspree.io/f/mpqkpwdg" method="POST">
+                    <form id="contact-form" action="https://formspree.io/f/mpqkpwdg" method="POST">
                         <div class="ff">
                             <label>Name</label>
                             <input type="text" name="name" placeholder="Your full name" required>
@@ -2024,12 +2143,14 @@
                                 <option>Other</option>
                             </select>
                         </div>
-                        <input type="hidden" name="_next" value="https://yourwebsite.com/thanks.html">
                         <div class="ff">
                             <label>Message</label>
                             <textarea name="message" placeholder="Tell us about your use case..."></textarea>
                         </div>
                         <button type="submit" class="fsub">Send message →</button>
+                        <div id="form-status" style="margin-top:10px; display:none;"></div>
+                        <input type="hidden" name="_next"
+                            value="https://kingolik-infrastructure.netlify.app/thanks.html">
                     </form>
                     <div class="privacy">
                         <div class="plock">🔒</div>
@@ -2284,7 +2405,16 @@
             speechSynthesis.getVoices();
             speechSynthesis.addEventListener('voiceschanged', () => speechSynthesis.getVoices());
         }
+        async function sendMessage(userInput) {
+            const response = await fetch('/.netlify/functions/chat', {
+                method: 'POST',
+                body: JSON.stringify({ message: userInput })
+            });
+            const data = await response.json();
+            return data.reply;
+        }
     </script>
+
 </body>
 
 </html>

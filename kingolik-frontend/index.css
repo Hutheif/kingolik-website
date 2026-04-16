@@ -1,0 +1,76 @@
+.testimonial-card {
+  display: flex;
+  gap: 50px;
+  align-items: center; /* Vertically centers the testimonial with the avatar */
+  margin-top: 70px;
+}
+
+.tm-content {
+  flex: 1; /* Content takes up the main space */
+}
+
+/* --- THE IMAGE FIX --- */
+/* 1. Update the wrapper to allow the shift */
+.tm-author {
+  width: 220px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  /* This moves the entire block up */
+  margin-top: -70px;
+  margin-bottom: -50px; /* Adjust as needed to prevent extra space below */
+}
+
+/* 2. Update the avatar itself */
+.author-avatar {
+  width: 220px; /* Bigger size for clarity */
+  height: 220px;
+  border-radius: 12px; /* A clean, modern square corner */
+  overflow: hidden;
+  border: 4px solid #4da6ff;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* Stronger shadow to make it "pop" */
+  background: #1a1a1a;
+  transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.author-avatar:hover {
+  transform: scale(1.02); /* Slight zoom when hovered */
+}
+
+.author-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fi-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.fi-title {
+  font-size: 0.65rem;
+  line-height: 1.4;
+  opacity: 0.7;
+  text-transform: uppercase;
+  color: #4da6ff;
+}
+
+.partners {
+  display: flex;
+  gap: 25px;
+  opacity: 0.5;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .testimonial-card {
+    flex-direction: column; /* Stack vertically on small screens */
+    text-align: center;
+  }
+}
